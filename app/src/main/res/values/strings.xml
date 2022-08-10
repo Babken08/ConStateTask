@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CoinStatsTask</string>
+    <string name="coin_list">Coin list</string>
+    <string name="used_to">Used</string>
+    <string name="coin">Coin</string>
+    <string name="hour">h</string>
+    <string name="price">Price</string>
+    <string name="default_request_error">Sorry coul\'d not make a request please try again</string>
+</resources>
