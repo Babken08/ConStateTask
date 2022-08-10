@@ -69,7 +69,4 @@ class CoinsActivity : AppCompatActivity() {
         Toast.makeText(this, infoId, Toast.LENGTH_SHORT).show()
     }
 
-    private fun toastInfo(message:String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 }
