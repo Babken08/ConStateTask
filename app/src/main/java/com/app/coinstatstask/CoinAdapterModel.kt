@@ -5,7 +5,7 @@ import com.app.coinstatstask.domain.Coin
 class CoinAdapterModel {
     var identifier:String? = null
     var imageUrl:String? = null
-    var rank:Int? = null
+    var rank:Double? = null
     var price:Double? = null
     var name:String? = null
     var symbol:String? = null

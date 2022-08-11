@@ -5,7 +5,7 @@ class Coin {
     var ic:String? = null
     var n:String? = null
     var s:String? = null
-    var r:Int? = null
+    var r:Double? = null
     var pu:Double? = null
     var pb:Double? = null
     var v:Double? = null

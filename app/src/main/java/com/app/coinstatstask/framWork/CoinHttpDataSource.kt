@@ -11,12 +11,22 @@ import retrofit2.Response
 class CoinHttpDataSource :CoinDataSource {
     private val httpClient = RetrofitClientCreator.getRetrofitClient()
     override suspend fun readCoins(): DataResponse<CoinsDatModel>? {
-        val result = httpClient.getCoins()
+        val result = try {
+            httpClient.getCoins()
+        }catch (e:Exception){
+            e.printStackTrace()
+            null
+        }
         return createDataResponse(result)
     }
 
     override suspend fun readFetchedCoins(): DataResponse<CoinsFetchedModel>? {
-        val result = httpClient.getFetchedCoins("array")
+        val result = try {
+            httpClient.getFetchedCoins("array")
+        }catch (e:Exception){
+            e.printStackTrace()
+            null
+        }
         return createDataResponse(result)
     }
 

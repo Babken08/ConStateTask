@@ -32,6 +32,10 @@ class CoinsActivityViewModel(repository: CoinRepository):CoinViewModel(repositor
                             callBack(items)
                         }
                     }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        callBack(null)
+                    }
                 }
             }
         }
@@ -100,7 +104,7 @@ class CoinsActivityViewModel(repository: CoinRepository):CoinViewModel(repositor
 
     private fun fetchItem(item:CoinAdapterModel?, list:List<Any?>) {
         try {
-            item?.rank = list[1] as Int?
+            item?.rank = list[1] as Double?
             item?.price = list[2] as Double?
             item?.percent = list[7] as Double?
         } catch (e:IndexOutOfBoundsException){

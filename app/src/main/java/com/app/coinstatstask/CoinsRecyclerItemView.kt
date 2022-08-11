@@ -80,7 +80,7 @@ class CoinsRecyclerItemView(context: Context):View(context) {
         defaultImage =  ContextCompat.getDrawable(context, R.drawable.ic_baseline_currency_bitcoin_24)
         upDrawable = ContextCompat.getDrawable(context, R.drawable.ic_up)
         downDrawable = ContextCompat.getDrawable(context, R.drawable.ic_down_)
-        rankBg = ContextCompat.getDrawable(context, R.drawable.ic_rank)
+        rankBg = ContextCompat.getDrawable(context, R.drawable.bg_drawable)
         starDrawable = ContextCompat.getDrawable(context, R.drawable.ic_star)
     }
 
@@ -100,7 +100,7 @@ class CoinsRecyclerItemView(context: Context):View(context) {
         initSingleRect(item?.symbol, symbolPaint, symbolRect)
         initSingleRect("${item?.percent?.toString()}%", percentPaint, percentChangeRect)
         initSingleRect("$${item?.price?.toString()}", pricePaint, priceRect)
-        initSingleRect(item?.rank?.toString(), rankPaint, rankRect)
+        initSingleRect(item?.rank?.toInt().toString(), rankPaint, rankRect)
     }
 
     private fun initSingleRect(str:String?, paint:TextPaint?, rect:Rect) {
@@ -173,7 +173,7 @@ class CoinsRecyclerItemView(context: Context):View(context) {
         }
         item?.rank?.let {
             val l = left + (bgDrawableWith/2 - rankRect.width()/2)
-            canvas.drawText(it.toString(), l.toFloat(),textTop, rankPaint)
+            canvas.drawText(it.toInt().toString(), l.toFloat(),textTop, rankPaint)
         }
         item?.symbol?.let {
             val txt = TextUtils.ellipsize(it, symbolPaint, textMaxWith, TextUtils.TruncateAt.END).toString()
