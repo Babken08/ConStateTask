@@ -11,6 +11,7 @@ import com.app.coinstatstask.utils.dp
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import java.lang.Exception
+import kotlin.math.abs
 
 class CoinsRecyclerItemView(context: Context):View(context) {
     private var image:Bitmap? = null
@@ -98,7 +99,10 @@ class CoinsRecyclerItemView(context: Context):View(context) {
     private fun initRects(){
         initSingleRect(item?.name, namePaint, nameRect)
         initSingleRect(item?.symbol, symbolPaint, symbolRect)
-        initSingleRect("${item?.percent?.toString()}%", percentPaint, percentChangeRect)
+        if (item?.percent != null) {
+            val percentText = abs(item!!.percent!!).toString()
+            initSingleRect("${percentText}%", percentPaint, percentChangeRect)
+        }
         initSingleRect("$${item?.price?.toString()}", pricePaint, priceRect)
         initSingleRect(item?.rank?.toInt().toString(), rankPaint, rankRect)
     }
@@ -188,29 +192,46 @@ class CoinsRecyclerItemView(context: Context):View(context) {
         val left = (width - bgDrawableWith)/2 + margins
 //        val left = 2 * (width/3) - bgDrawableWith - margins/2
         val right = left + bgDrawableWith
+        val percentText = abs(item!!.percent!!)
 
 
-        percentBgGreen?.let {
-            val top = (height - bgDrawableHeight) /2
-            val bottom = top + bgDrawableHeight
-            it.setBounds(left, top, right, bottom)
-            it.draw(canvas)
+        if (item!!.percent!! >= 0) {
+            percentPaint.color = ContextCompat.getColor(context, R.color.green_text_color)
+            percentBgGreen?.let {
+                val top = (height - bgDrawableHeight) /2
+                val bottom = top + bgDrawableHeight
+                it.setBounds(left, top, right, bottom)
+                it.draw(canvas)
+            }
+            upDrawable?.let {
+                // the logic was not written in the dock. That's why I always draw the up icon
+                val x = right - percentChangeRect.width() - 2*margins/3 - it.intrinsicWidth
+                val top = height/2 - it.intrinsicHeight/2
+                val bottom = top +  it.intrinsicHeight
+                it.setBounds(x, top, x+it.intrinsicWidth, bottom)
+                it.draw(canvas)
+            }
+        } else {
+            percentPaint.color = ContextCompat.getColor(context, R.color.text_red)
+            percentBgRed?.let {
+                val top = (height - bgDrawableHeight) /2
+                val bottom = top + bgDrawableHeight
+                it.setBounds(left, top, right, bottom)
+                it.draw(canvas)
+            }
+            downDrawable?.let {
+                // the logic was not written in the dock. That's why I always draw the up icon
+                val x = right - percentChangeRect.width() - 2*margins/3 - it.intrinsicWidth
+                val top = height/2 - it.intrinsicHeight/2
+                val bottom = top +  it.intrinsicHeight
+                it.setBounds(x, top, x+it.intrinsicWidth, bottom)
+                it.draw(canvas)
+            }
         }
 
-        item?.percent?.let {
-            val x = right - percentChangeRect.width() - margins/3f
-            val y  = (height + percentChangeRect.height()) /2f
-            canvas.drawText("${it}%", x, y, percentPaint)
-        }
-
-        upDrawable?.let {
-            // the logic was not written in the dock. That's why I always draw the up icon
-            val x = right - percentChangeRect.width() - 2*margins/3 - it.intrinsicWidth
-            val top = height/2 - it.intrinsicHeight/2
-            val bottom = top +  it.intrinsicHeight
-            it.setBounds(x, top, x+it.intrinsicWidth, bottom)
-            it.draw(canvas)
-        }
+        val x = right - percentChangeRect.width() - margins/3f
+        val y  = (height + percentChangeRect.height()) /2f
+        canvas.drawText("${percentText}%", x, y, percentPaint)
     }
 
     fun configureItem(item:CoinAdapterModel?) {
